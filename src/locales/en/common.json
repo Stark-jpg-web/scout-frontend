@@ -2,5 +2,19 @@
   "app": {
     "name": "FrameFinder",
     "tagline": "Discover your next favorite film."
+  },
+  "language": {
+    "selectorLabel": "Language selector"
+  },
+  "theme": {
+    "switchToLight": "Switch to light mode",
+    "switchToDark": "Switch to dark mode"
+  },
+  "navigation": {
+    "mainLabel": "Home",
+    "discover": "Discover",
+    "search": "Search",
+    "library": "My Library",
+    "favorites": "Favorites"
   }
 }

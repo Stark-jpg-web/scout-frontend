@@ -1,9 +1,10 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   color-scheme: dark;
-  --font-app: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", sans-serif;
+  --font-app:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', sans-serif;
 
   --background: #171312;
   --foreground: #f8f4ef;
@@ -91,7 +92,9 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-app);
-  transition: background-color 200ms ease, color 200ms ease;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
 }
 
 button,
@@ -99,4 +102,8 @@ input,
 textarea,
 select {
   font: inherit;
+}
+
+.control-btn {
+  @apply  items-center justify-center min-h-10 px-3 py-2 border border-border rounded-lg bg-surface text-foreground hover:bg-surface-elevated cursor-pointer transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-[3px];
 }

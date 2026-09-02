@@ -1,15 +1,15 @@
 import { useTranslation } from 'react-i18next'
-import LanguageBtns from "../components/testing/LanguageBtns"
 
 function HomePage() {
   const { t } = useTranslation()
 
   return (
-    <main className='bg-background text-white h-screen'>
-      <h1>{t('app.name')}</h1>
-<p className=''>{t('app.tagline')}</p>
+    <main className="bg-background text-white h-screen">
+      <h1 className="text-4xl font-bold tracking-tight text-foreground">
+          {t('app.name')}
+        </h1>
 
-      <LanguageBtns />
+      <p className="text-base text-muted">{t('app.tagline')}</p>
     </main>
   )
 }

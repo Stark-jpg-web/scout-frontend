@@ -1,14 +1,5 @@
 @import 'tailwindcss';
 
-.app {
-  min-height: 100vh;
-  display: grid;
-  place-content: center;
-  gap: 16px;
-  padding: 24px;
-  text-align: center;
-}
-
 .language-switcher {
   display: flex;
   justify-content: center;

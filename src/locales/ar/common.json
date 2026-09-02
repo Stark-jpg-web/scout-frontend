@@ -2,5 +2,20 @@
   "app": {
     "name": "فريم فايندر",
     "tagline": "اكتشف فيلمك المفضل التالي."
+  },
+  "language": {
+    "selectorLabel": "محدد اللغة"
+  },
+  "theme": {
+    "switchToLight": "التبديل إلى الوضع الفاتح",
+    "switchToDark": "التبديل إلى الوضع الداكن"
+  },
+  "navigation": {
+    "mainLabel": "الرئيسية",
+    "discover": "اكتشف",
+    "search": "بحث",
+    "library": "مكتبتي",
+    "favorite": "المفضلة",
+    "favorites": "المفضلة"
   }
 }
