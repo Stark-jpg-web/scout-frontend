@@ -65,6 +65,7 @@ function Navbar() {
           className="hidden md:flex w-full items-center gap-2"
           aria-label={t('navigation.mainLabel')}
         >
+          
           {navLinks.map((link) => (
             <NavLink
               key={link.to}
