@@ -11,9 +11,9 @@ function AppLayout() {
   }, [theme])
 
   return (
-    <div className="">
+    <div className="min-h-screen w-full bg-background text-foreground flex flex-col">
       <Navbar />
-      <main className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1">
         <Outlet />
       </main>
     </div>

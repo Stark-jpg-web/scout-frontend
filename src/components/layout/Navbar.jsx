@@ -36,7 +36,7 @@ function Navbar() {
   ]
 
   const getNavLinkClass = ({ isActive }) =>
-    `px-5 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
+    `px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
       isActive
         ? 'bg-surface-elevated text-primary font-semibold'
         : 'text-muted hover:text-foreground hover:bg-surface-elevated/50'
@@ -65,7 +65,6 @@ function Navbar() {
           className="hidden md:flex w-full items-center gap-2"
           aria-label={t('navigation.mainLabel')}
         >
-          
           {navLinks.map((link) => (
             <NavLink
               key={link.to}
@@ -81,7 +80,7 @@ function Navbar() {
         {/* Right Section: Grouped Controls & Mobile Hamburger */}
         <div className="flex items-center gap-3">
           {/* Grouped Theme & Language Control Buttons */}
-          <div className="hidden md:flex items-center gap-1.5 p-1 rounded-xl bg-surface-muted/50 border border-border">
+          <div className="hidden md:flex items-center gap-1.5 rounded-xl bg-surface-muted/50 border border-border">
             <ThemeToggle />
             <LanguageBtn />
           </div>
@@ -90,7 +89,7 @@ function Navbar() {
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="flex md:hidden  p-2"
+            className="flex md:hidden  "
             aria-expanded={isOpen}
             aria-controls="mobile-nav-menu"
             aria-label={isOpen ? 'Close menu' : 'Open menu'}

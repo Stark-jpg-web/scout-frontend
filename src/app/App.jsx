@@ -8,7 +8,7 @@ import LibraryPage from '../pages/LibraryPage.jsx'
 
 function App() {
   return (
-    <div className="app">
+    <div>
       <Routes>
         <Route element={<AppLayout />}>
           <Route path="/" element={<HomePage />} />
