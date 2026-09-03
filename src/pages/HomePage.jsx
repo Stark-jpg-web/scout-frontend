@@ -21,7 +21,7 @@ function HomePage() {
   const error = trending.error || topRated.error || popular.error
   //testing api calls
   const spotlight = popular?.data?.results?.[0]
-  const name = mediaType === 'movie' ? spotlight.title : spotlight.name
+  const name = mediaType === 'movie' ? spotlight?.title : spotlight?.name
 
   return (
     <div className="space-y-6">
@@ -54,7 +54,7 @@ function HomePage() {
               spotlight.poster_path,
               TMDB_IMAGE_SIZES.POSTER_CARD
             )}
-            alt={name}
+            alt={mediaType === 'movie' ? spotlight.title : spotlight.name}
             className="w-40 rounded-xl shadow-lg shrink-0"
           />
           <div className="space-y-2 text-center md:text-start">

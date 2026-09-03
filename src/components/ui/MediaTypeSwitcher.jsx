@@ -5,15 +5,15 @@ function MediaTypeSwitcher() {
   const { t } = useTranslation()
   const mediaType = useStore((state) => state.mediaType)
   const toggleMediaType = useStore((state) => state.toggleMediaType)
-console.log(mediaType)
+  console.log(mediaType)
   return (
     <>
       <button
         type="button"
         onClick={toggleMediaType}
-        className={`control-btn ${mediaType === 'tv' ? 'text-blue-500' : 'text-primary'}`}
+        className={`control-btn ${mediaType === 'movie' ? 'text-blue-500' : 'text-primary'}`}
       >
-        {mediaType}
+        {mediaType === 'movie' ? t('media.shows') : t('media.movies')}
       </button>
     </>
   )

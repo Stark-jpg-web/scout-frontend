@@ -44,6 +44,6 @@ export function fetchTrending(mediaType = 'all', timeWindow = 'week') {
 export function fetchTopRated(mediaType = 'all', page = 1) {
   return apiFetch(`/${mediaType}/top_rated`, { page })
 }
-export function fetchPopular(mediaType = 'all', page = 1){
-  return apiFetch(`/${mediaType}/popular`,{page})
+export function fetchPopular(mediaType = 'all', page = 1) {
+  return apiFetch(`/${mediaType}/popular`, { page })
 }

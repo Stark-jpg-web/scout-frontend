@@ -1,4 +1,4 @@
-import { useState, useEffect, act } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import ThemeToggle from '../ui/ThemeToggle'
