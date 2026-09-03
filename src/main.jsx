@@ -6,7 +6,8 @@ import { queryClient } from './lib/queryClient.js'
 import './index.css'
 import './i18n.js'
 import App from './app/App.jsx'
-
+import { fetchTrending } from './services/tmdb/movieApi.js'
+window.testFetch = fetchTrending
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>

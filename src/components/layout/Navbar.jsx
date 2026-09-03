@@ -1,13 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, act } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import ThemeToggle from '../ui/ThemeToggle'
 import LanguageBtn from '../ui/LanguageSwitcher'
+import MediaTypeSwitcher from '../ui/MediaTypeSwitcher'
+
 
 function Navbar() {
   const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const location = useLocation()
+
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -79,10 +82,11 @@ function Navbar() {
 
         {/* Right Section: Grouped Controls & Mobile Hamburger */}
         <div className="flex items-center gap-3">
-          {/* Grouped Theme & Language Control Buttons */}
+          {/* Grouped Theme & Language & MediaType Controls */}
           <div className="hidden md:flex items-center gap-1.5 rounded-xl bg-surface-muted/50 border border-border">
             <ThemeToggle />
             <LanguageBtn />
+            <MediaTypeSwitcher />
           </div>
 
           {/* Mobile Hamburger Button */}
@@ -131,6 +135,7 @@ function Navbar() {
             <div className="flex items-center gap-1.5 p-1 rounded-xl bg-surface-muted/50 border border-border">
               <ThemeToggle />
               <LanguageBtn />
+              <MediaTypeSwitcher />
             </div>
           </div>
         </div>

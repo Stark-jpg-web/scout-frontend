@@ -7,12 +7,21 @@ export const useStore = create(
       (set) => ({
         // UI / App State
         theme: 'dark',
-        setTheme: (theme) => set({ theme }, false, 'setTheme'),
+   
         toggleTheme: () =>
           set(
             (state) => ({ theme: state.theme === 'dark' ? 'light' : 'dark' }),
             false,
             'toggleTheme'
+          ),
+
+        // Media Type State
+        mediaType: 'movie',
+        toggleMediaType: () =>
+          set(
+            (state) => ({ mediaType: state.mediaType === 'movie' ? 'tv' : 'movie' }),
+            false,
+            'toggleMediaType'
           ),
 
         // Search & Filter State

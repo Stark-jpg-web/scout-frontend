@@ -3,6 +3,11 @@
     "name": "FrameFinder",
     "tagline": "Discover your next favorite film."
   },
+  "media": {
+    "all": "All",
+    "movies": "Movies",
+    "shows": "TV Shows"
+  },
   "language": {
     "selectorLabel": "Language selector"
   },
