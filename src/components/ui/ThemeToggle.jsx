@@ -15,7 +15,7 @@ function ThemeToggle() {
         theme === 'dark' ? 'theme.switchToLight' : 'theme.switchToDark'
       )}
     >
-      <span aria-hidden="true" className="text-lg">
+      <span aria-hidden="true">
         {theme === 'dark' ? '☀' : '☾'}
       </span>
     </button>
