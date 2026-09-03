@@ -4,33 +4,58 @@ import {
   fetchTopRated,
   fetchPopular,
 } from '../services/tmdb/movieApi'
+import { useCurrentLanguage } from '../utils/constants.js'
 
 export const mediaKeys = {
   all: ['media'],
   type: (type) => [...mediaKeys.all, type],
-  trending: (type = 'movie') => [...mediaKeys.type(type), 'trending'],
-  topRated: (type = 'movie') => [...mediaKeys.type(type), 'top-rated'],
-  popular: (type = 'movie') => [...mediaKeys.type(type), 'popular'],
+  trending: (type = 'movie', language = 'en-US') => [
+    ...mediaKeys.type(type),
+    'trending',
+    language,
+  ],
+  topRated: (type = 'movie', language = 'en-US') => [
+    ...mediaKeys.type(type),
+    'top-rated',
+    language,
+  ],
+  popular: (type = 'movie', language = 'en-US') => [
+    ...mediaKeys.type(type),
+    'popular',
+    language,
+  ],
   detail: (type = 'movie', id) => [...mediaKeys.type(type), 'detail', id],
-  genres: (type = 'movie') => [...mediaKeys.type(type), 'genres'],
+  genres: (type = 'movie', language = 'en-US') => [
+    ...mediaKeys.type(type),
+    'genres',
+    language,
+  ],
 }
 
 export function useTrending(type = 'movie') {
+  const language = useCurrentLanguage()
+
   return useQuery({
-    queryKey: mediaKeys.trending(type),
-    queryFn: () => fetchTrending(type),
+    queryKey: mediaKeys.trending(type, language),
+    queryFn: () => fetchTrending(type, 'week', language),
   })
 }
+
 export function useTopRated(type = 'movie') {
+  const language = useCurrentLanguage()
+
   return useQuery({
-    queryKey: mediaKeys.topRated(type),
-    queryFn: () => fetchTopRated(type),
+    queryKey: mediaKeys.topRated(type, language),
+    queryFn: () => fetchTopRated(type, 1, language),
   })
 }
+
 export function usePopular(type = 'movie') {
+  const language = useCurrentLanguage()
+
   return useQuery({
-    queryKey: mediaKeys.popular(type),
-    queryFn: () => fetchPopular(type),
+    queryKey: mediaKeys.popular(type, language),
+    queryFn: () => fetchPopular(type, 1, language),
   })
 }
 

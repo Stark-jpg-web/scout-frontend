@@ -8,6 +8,7 @@ import {
   TMDB_IMAGE_SIZES,
 } from '../utils/constants.js'
 import useStore from '../store/useStore.js'
+import RatingBadge from '../components/ui/RatingBadge.jsx'
 
 function HomePage() {
   const { t } = useTranslation()
@@ -59,17 +60,18 @@ function HomePage() {
           />
           <div className="space-y-2 text-center md:text-start">
             <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/20 text-primary uppercase tracking-wider">
-              #1 Trending
+              {t('media.trending')}
             </span>
             <h2 className="text-2xl font-bold text-foreground">
               {mediaType === 'movie' ? spotlight.title : spotlight.name}
             </h2>
             <p className="text-sm text-muted line-clamp-3">
-              {spotlight.overview}
+              {spotlight.overview || t('media.noOverview')}
             </p>
             <p className="text-xs text-muted/80">
-              Release: {spotlight.release_date || spotlight.first_air_date} •
-              Rating: ⭐ {spotlight.vote_average?.toFixed(1)}
+              {t('media.release_date')}:{' '}
+              {spotlight.release_date || spotlight.first_air_date} •{' '}
+              <RatingBadge rating={spotlight.vote_average} />
             </p>
           </div>
         </div>

@@ -6,7 +6,15 @@
   "media": {
     "all": "All",
     "movies": "Movies",
-    "shows": "TV Shows"
+    "shows": "TV Shows",
+    "release_date": "Release Date",
+    "rating": "Rating",
+    "overview": "Overview",
+    "trending": "Trending",
+    "top_rated": "Top Rated",
+    "popular": "Popular",
+    "by": "by",
+    "noOverview": "No Overview Available"
   },
   "language": {
     "selectorLabel": "Language selector"

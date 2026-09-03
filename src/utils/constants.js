@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 export const TMDB_IMAGE_BASE_URL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL ||'https://image.tmdb.org/t/p'
 
 
@@ -35,6 +36,12 @@ export const FALLBACK_POSTER =
     if (path.startsWith('http')) return path; 
 
     return `${TMDB_IMAGE_BASE_URL}/${size}${path}`
-    
+  
 
   }
+
+  export function useCurrentLanguage() {
+  const { i18n } = useTranslation()
+  const lang = i18n.resolvedLanguage || i18n.language || 'en'
+  return lang === 'ar' ? 'ar-SA' : 'en-US'
+}

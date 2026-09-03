@@ -38,12 +38,12 @@ export async function apiFetch(endpoint, params = {}) {
   return data
 }
 
-export function fetchTrending(mediaType = 'all', timeWindow = 'week') {
-  return apiFetch(`/trending/${mediaType}/${timeWindow}`)
+export function fetchTrending(mediaType = 'all', timeWindow = 'week',language='en-US') {
+  return apiFetch(`/trending/${mediaType}/${timeWindow}`,{language})
 }
-export function fetchTopRated(mediaType = 'all', page = 1) {
-  return apiFetch(`/${mediaType}/top_rated`, { page })
+export function fetchTopRated(mediaType = 'all', page = 1,language='en-US') {
+  return apiFetch(`/${mediaType}/top_rated`, { page,language })
 }
-export function fetchPopular(mediaType = 'all', page = 1) {
-  return apiFetch(`/${mediaType}/popular`, { page })
+export function fetchPopular(mediaType = 'all', page = 1,language='en-US') {
+  return apiFetch(`/${mediaType}/popular`, { page,language })
 }
