@@ -38,12 +38,44 @@ export async function apiFetch(endpoint, params = {}) {
   return data
 }
 
+async function fetchWithFallBack(endpoint,params={}){
+  const data =await apiFetch(endpoint,params)
+  const language = params.language||"en-US"
+  if(!language.startsWith("ar")||!data?.results){
+    return data
+  }
+  const hasEmptyOverView=data.results.some((item)=>!item?.overview||item.overview.trim()==="")
+  if(hasEmptyOverView){
+    try{
+      const enData=await apiFetch(endpoint,{...params,language:'en-US'})
+         const enMap = new Map(enData.results.map((m) => [m.id, m]))
+      data.results = data.results.map((item) => {
+        const enItem = enMap.get(item.id)
+        return {
+          ...item,
+          // If Arabic title is missing, use English
+          title: item.title || enItem?.title || item.original_title,
+          name: item.name || enItem?.name || item.original_name,
+          // If Arabic overview is missing, use English overview!
+          overview: item.overview?.trim()
+            ? item.overview
+            : (enItem?.overview || ''),
+        }
+      })
+    } catch (err) {
+      console.warn('English overview fallback failed:', err)
+    }
+  }
+  return data
+}
+
+
 export function fetchTrending(mediaType = 'all', timeWindow = 'week',language='en-US') {
-  return apiFetch(`/trending/${mediaType}/${timeWindow}`,{language})
+  return fetchWithFallBack(`/trending/${mediaType}/${timeWindow}`,{language})
 }
 export function fetchTopRated(mediaType = 'all', page = 1,language='en-US') {
-  return apiFetch(`/${mediaType}/top_rated`, { page,language })
+  return fetchWithFallBack(`/${mediaType}/top_rated`, { page,language })
 }
 export function fetchPopular(mediaType = 'all', page = 1,language='en-US') {
-  return apiFetch(`/${mediaType}/popular`, { page,language })
+  return fetchWithFallBack(`/${mediaType}/popular`, { page,language })
 }

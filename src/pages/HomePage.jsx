@@ -10,7 +10,8 @@ import {
 import useStore from '../store/useStore.js'
 import MediaCard from '../components/media/MediaCard.jsx'
 import MediaCardSkeleton from '../components/media/MediaCardSkeleton.jsx'
-
+import MediaCarousel from '../components/media/MediaCarousel.jsx'
+import HeroBanner from '../components/media/HeroBanner.jsx'
 function HomePage() {
   const { t } = useTranslation()
   const mediaType = useStore((state) => state.mediaType)
@@ -24,8 +25,7 @@ function HomePage() {
   const isError = trending.isError || topRated.isError || popular.isError
   const error = trending.error || topRated.error || popular.error
   //testing api calls
-  const spotlight = popular?.data?.results?.[0]
-  const name = mediaType === 'movie' ? spotlight?.title : spotlight?.name
+  const heroItem = trending.data?.results?.[0]
 
   return (
     <div className="space-y-6">
@@ -55,14 +55,26 @@ function HomePage() {
         </div>
       )}
       {/* Live Spotlight Verification */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4 justify-items-center">
-        {spotlight && !isLoading && <MediaCard media={spotlight} />}
-        {spotlight && !isLoading && <MediaCard media={spotlight} />}
-        {spotlight && !isLoading && <MediaCard media={spotlight} />}
-        {spotlight && !isLoading && <MediaCard media={spotlight} />}
-        {spotlight && !isLoading && <MediaCard media={spotlight} />}
-        {spotlight && !isLoading && <MediaCard media={spotlight} />}{' '}
-      </div>
+       <HeroBanner media={heroItem} isLoading={trending.isLoading} />
+
+      <MediaCarousel
+        title={t('media.trending')}
+        items={trending.data?.results || []}
+        isLoading={trending.isLoading}
+        seeAllLink="/discover/trending"
+      />
+      <MediaCarousel
+        title={t('media.popular')}
+        items={popular.data?.results || []}
+        isLoading={popular.isLoading}
+        seeAllLink="/discover/popular"
+      />
+      <MediaCarousel
+        title={t('media.top_rated')}
+        items={topRated.data?.results || []}
+        isLoading={topRated.isLoading}
+        seeAllLink="/discover/top-rated"
+      />
     </div>
   )
 }

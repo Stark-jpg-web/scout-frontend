@@ -10,7 +10,12 @@ function MediaCard({ media, onClick }) {
   if (!media || media === null) return null
 
   const { t } = useTranslation()
-  const title = media.title || media.name || t('media.untitled')
+  const title =
+    media.title ||
+    media.name ||
+    media.original_title ||
+    media.original_name ||
+    t('media.untitled')
   const releaseDate = media.release_date || media.first_air_date
   const releaseYear = releaseDate ? releaseDate.slice(0, 4) : null
 
