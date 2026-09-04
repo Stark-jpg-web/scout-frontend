@@ -14,7 +14,8 @@
     "top_rated": "Top Rated",
     "popular": "Popular",
     "by": "by",
-    "noOverview": "No Overview Available"
+    "noOverview": "No Overview Available",
+    "untitled":"Untitled"
   },
   "language": {
     "selectorLabel": "Language selector"

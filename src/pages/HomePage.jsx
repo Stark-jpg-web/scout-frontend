@@ -8,7 +8,8 @@ import {
   TMDB_IMAGE_SIZES,
 } from '../utils/constants.js'
 import useStore from '../store/useStore.js'
-import MediaCard from '../components/movies/MediaCard.jsx'
+import MediaCard from '../components/media/MediaCard.jsx'
+import MediaCardSkeleton from '../components/media/MediaCardSkeleton.jsx'
 
 function HomePage() {
   const { t } = useTranslation()
@@ -17,7 +18,9 @@ function HomePage() {
   const topRated = useTopRated(mediaType)
   const popular = usePopular(mediaType)
   const isLoading =
-    trending.isLoading || topRated.isLoading || popular.isLoading
+    trending.isLoading == true ||
+    topRated.isLoading == true ||
+    popular.isLoading == true
   const isError = trending.isError || topRated.isError || popular.isError
   const error = trending.error || topRated.error || popular.error
   //testing api calls
@@ -38,7 +41,11 @@ function HomePage() {
 
       {/* Loading Skeleton Placeholder */}
       {isLoading && (
-        <div className="w-full h-72 rounded-2xl bg-surface animate-pulse" />
+        <div className="grid grid-cols-2">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <MediaCardSkeleton key={i} className="" />
+          ))}
+        </div>
       )}
       {/* Error State */}
       {isError && (
@@ -48,7 +55,14 @@ function HomePage() {
         </div>
       )}
       {/* Live Spotlight Verification */}
-      {spotlight && !isLoading && <MediaCard media={spotlight} />}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4 justify-items-center">
+        {spotlight && !isLoading && <MediaCard media={spotlight} />}
+        {spotlight && !isLoading && <MediaCard media={spotlight} />}
+        {spotlight && !isLoading && <MediaCard media={spotlight} />}
+        {spotlight && !isLoading && <MediaCard media={spotlight} />}
+        {spotlight && !isLoading && <MediaCard media={spotlight} />}
+        {spotlight && !isLoading && <MediaCard media={spotlight} />}{' '}
+      </div>
     </div>
   )
 }

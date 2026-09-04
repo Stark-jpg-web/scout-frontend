@@ -15,7 +15,8 @@
     "top_rated": "الأعلى تقييما",
     "popular": "الأكثر شعبية",
     "by": "بواسطة",
-    "noOverview": "لا يوجد وصف بالعربي متاح"
+    "noOverview": "لا يوجد وصف بالعربي متاح",
+    "untitled":"بدون عنوان"
   },
   "language": {
     "selectorLabel": "محدد اللغة"
