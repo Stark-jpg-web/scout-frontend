@@ -8,7 +8,7 @@ import {
   TMDB_IMAGE_SIZES,
 } from '../utils/constants.js'
 import useStore from '../store/useStore.js'
-import RatingBadge from '../components/ui/RatingBadge.jsx'
+import MediaCard from '../components/movies/MediaCard.jsx'
 
 function HomePage() {
   const { t } = useTranslation()
@@ -48,34 +48,7 @@ function HomePage() {
         </div>
       )}
       {/* Live Spotlight Verification */}
-      {spotlight && !isLoading && (
-        <div className=" overflow-hidden rounded-2xl bg-surface border border-border p-6 flex flex-col md:flex-row gap-6 items-center">
-          <img
-            src={getImageUrl(
-              spotlight.poster_path,
-              TMDB_IMAGE_SIZES.POSTER_CARD
-            )}
-            alt={mediaType === 'movie' ? spotlight.title : spotlight.name}
-            className="w-40 rounded-xl shadow-lg shrink-0"
-          />
-          <div className="space-y-2 text-center md:text-start">
-            <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/20 text-primary uppercase tracking-wider">
-              {t('media.trending')}
-            </span>
-            <h2 className="text-2xl font-bold text-foreground">
-              {mediaType === 'movie' ? spotlight.title : spotlight.name}
-            </h2>
-            <p className="text-sm text-muted line-clamp-3">
-              {spotlight.overview || t('media.noOverview')}
-            </p>
-            <p className="text-xs text-muted/80">
-              {t('media.release_date')}:{' '}
-              {spotlight.release_date || spotlight.first_air_date} •{' '}
-              <RatingBadge rating={spotlight.vote_average} />
-            </p>
-          </div>
-        </div>
-      )}
+      {spotlight && !isLoading && <MediaCard media={spotlight} />}
     </div>
   )
 }
