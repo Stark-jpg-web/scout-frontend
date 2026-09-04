@@ -16,8 +16,10 @@
     "popular": "الأكثر شعبية",
     "by": "بواسطة",
     "noOverview": "لا يوجد وصف بالعربي متاح",
-    "untitled":"بدون عنوان"
-
+    "untitled": "بدون عنوان",
+    "viewDetails": "عرض التفاصيل",
+    "addToFavorites": "إضافة للمفضلة",
+    "newReleases": "الإصدارات الجديدة"
   },
   "language": {
     "selectorLabel": "محدد اللغة"
@@ -34,10 +36,10 @@
     "favorite": "المفضلة",
     "favorites": "المفضلة"
   },
-  "general":{
-    "space":" ",
-    "in":"في",
-    "seeAll":"مشاهدة المزيد",
-    "now":"الآن"
+  "general": {
+    "space": " ",
+    "in": "في",
+    "seeAll": "مشاهدة المزيد",
+    "now": "الآن"
   }
 }
