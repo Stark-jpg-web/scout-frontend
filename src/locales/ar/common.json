@@ -31,5 +31,9 @@
     "library": "مكتبتي",
     "favorite": "المفضلة",
     "favorites": "المفضلة"
+  },
+  "general":{
+    "space":" ",
+    "in":"في"
   }
 }

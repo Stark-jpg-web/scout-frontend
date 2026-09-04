@@ -29,5 +29,9 @@
     "search": "Search",
     "library": "My Library",
     "favorites": "Favorites"
+  },
+  "general": {
+    "space": " ",
+    "in": "in"
   }
 }
