@@ -1,18 +1,16 @@
 import { useTranslation } from 'react-i18next'
-export const TMDB_IMAGE_BASE_URL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL ||'https://image.tmdb.org/t/p'
-
-
+export const TMDB_IMAGE_BASE_URL =
+  import.meta.env.VITE_TMDB_IMAGE_BASE_URL || 'https://image.tmdb.org/t/p'
 
 export const TMDB_IMAGE_SIZES = {
   POSTER_THUMB: 'w185',
-  POSTER_CARD: 'w342',     // Default size for carousel and grid movie cards
-  POSTER_DETAIL: 'w500',   // High-res poster on details page sidebar
-  BACKDROP_SM: 'w780',     // Mobile / Tablet hero banner
-  BACKDROP_LG: 'w1280',    // Desktop widescreen cinema hero spotlight
-  PROFILE: 'w185',         // Cast & crew avatar photos
-  ORIGINAL: 'original',    // Raw uploaded file
+  POSTER_CARD: 'w342', // Default size for carousel and grid movie cards
+  POSTER_DETAIL: 'w500', // High-res poster on details page sidebar
+  BACKDROP_SM: 'w780', // Mobile / Tablet hero banner
+  BACKDROP_LG: 'w1280', // Desktop widescreen cinema hero spotlight
+  PROFILE: 'w185', // Cast & crew avatar photos
+  ORIGINAL: 'original', // Raw uploaded file
 }
-
 
 export const FALLBACK_POSTER =
   'data:image/svg+xml;charset=UTF-8,' +
@@ -26,22 +24,50 @@ export const FALLBACK_POSTER =
     </svg>
   `)
 
-
-
-  export function getImageUrl(path, size=TMDB_IMAGE_SIZES.POSTER_CARD){
-    if (!path || path === 'null') {
-      return FALLBACK_POSTER
-    }
-
-    if (path.startsWith('http')) return path; 
-
-    return `${TMDB_IMAGE_BASE_URL}/${size}${path}`
-  
-
+export function getImageUrl(path, size = TMDB_IMAGE_SIZES.POSTER_CARD) {
+  if (!path || path === 'null') {
+    return FALLBACK_POSTER
   }
 
-  export function useCurrentLanguage() {
+  if (path.startsWith('http')) return path
+
+  return `${TMDB_IMAGE_BASE_URL}/${size}${path}`
+}
+
+export function useCurrentLanguage() {
   const { i18n } = useTranslation()
   const lang = i18n.resolvedLanguage || i18n.language || 'en'
   return lang === 'ar' ? 'ar-SA' : 'en-US'
+}
+
+export function formatDate(dateStr) {
+  const date = dateStr?.release_date || dateStr?.first_air_date
+  return date?.slice(0, 4) || null
+}
+
+export const BADGE_CONFIGS = {
+  trending: {
+    className: 'bg-primary/20 text-primary border border-primary/30',
+    labelKey: 'media.trending',
+  },
+  popular: {
+    className: 'bg-accent/20 text-accent border border-accent/30',
+    labelKey: 'media.popular',
+  },
+  top_rated: {
+    className:
+      'bg-rating-excellent/20 text-rating-excellent border border-rating-excellent/30',
+    labelKey: 'media.top_rated',
+  },
+  new_releases: {
+    className: 'border-sky-500/30 bg-sky-500/20 text-sky-400',
+    labelKey: 'media.new_releases',
+  },
+}
+
+export function badgeStyles(type) {
+  return (
+    BADGE_CONFIGS[type]?.className ||
+    'bg-primary/20 text-primary border border-primary/30'
+  )
 }

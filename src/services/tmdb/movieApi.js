@@ -38,17 +38,19 @@ export async function apiFetch(endpoint, params = {}) {
   return data
 }
 
-async function fetchWithFallBack(endpoint,params={}){
-  const data =await apiFetch(endpoint,params)
-  const language = params.language||"en-US"
-  if(!language.startsWith("ar")||!data?.results){
+async function fetchWithFallBack(endpoint, params = {}) {
+  const data = await apiFetch(endpoint, params)
+  const language = params.language || 'en-US'
+  if (!language.startsWith('ar') || !data?.results) {
     return data
   }
-  const hasEmptyOverView=data.results.some((item)=>!item?.overview||item.overview.trim()==="")
-  if(hasEmptyOverView){
-    try{
-      const enData=await apiFetch(endpoint,{...params,language:'en-US'})
-         const enMap = new Map(enData.results.map((m) => [m.id, m]))
+  const hasEmptyOverView = data.results.some(
+    (item) => !item?.overview || item.overview.trim() === ''
+  )
+  if (hasEmptyOverView) {
+    try {
+      const enData = await apiFetch(endpoint, { ...params, language: 'en-US' })
+      const enMap = new Map(enData.results.map((m) => [m.id, m]))
       data.results = data.results.map((item) => {
         const enItem = enMap.get(item.id)
         return {
@@ -59,7 +61,7 @@ async function fetchWithFallBack(endpoint,params={}){
           // If Arabic overview is missing, use English overview!
           overview: item.overview?.trim()
             ? item.overview
-            : (enItem?.overview || ''),
+            : enItem?.overview || '',
         }
       })
     } catch (err) {
@@ -69,13 +71,27 @@ async function fetchWithFallBack(endpoint,params={}){
   return data
 }
 
-
-export function fetchTrending(mediaType = 'all', timeWindow = 'week',language='en-US') {
-  return fetchWithFallBack(`/trending/${mediaType}/${timeWindow}`,{language})
+export function fetchTrending(
+  mediaType = 'all',
+  timeWindow = 'week',
+  language = 'en-US'
+) {
+  return fetchWithFallBack(`/trending/${mediaType}/${timeWindow}`, { language })
 }
-export function fetchTopRated(mediaType = 'all', page = 1,language='en-US') {
-  return fetchWithFallBack(`/${mediaType}/top_rated`, { page,language })
+export function fetchTopRated(mediaType = 'all', page = 1, language = 'en-US') {
+  return fetchWithFallBack(`/${mediaType}/top_rated`, { page, language })
 }
-export function fetchPopular(mediaType = 'all', page = 1,language='en-US') {
-  return fetchWithFallBack(`/${mediaType}/popular`, { page,language })
+export function fetchPopular(mediaType = 'all', page = 1, language = 'en-US') {
+  return fetchWithFallBack(`/${mediaType}/popular`, { page, language })
+}
+export function fetchNewReleases(
+  mediaType = 'movie',
+  page = 1,
+  language = 'en-US'
+) {
+  const endpoint = mediaType === 'tv' ? '/tv/on_the_air' : '/movie/now_playing'
+  return fetchWithFallBack(endpoint, {
+    page,
+    language,
+  })
 }

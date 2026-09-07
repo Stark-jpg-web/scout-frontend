@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { FaHeart, FaInfoCircle } from 'react-icons/fa'
 import { getImageUrl, TMDB_IMAGE_SIZES } from '../../utils/constants.js'
 import RatingBadge from '../ui/RatingBadge.jsx'
-
+import { formatDate } from '../../utils/constants.js'
 function HeroBanner({ media, isLoading = false, onFavoriteClick }) {
   const { t } = useTranslation()
 
@@ -21,9 +21,7 @@ function HeroBanner({ media, isLoading = false, onFavoriteClick }) {
     media.original_title ||
     media.original_name ||
     t('media.untitled')
-
-  const dateStr = media.release_date || media.first_air_date
-  const year = dateStr ? dateStr.slice(0, 4) : null
+  const date = formatDate(media)
   const mediaType = media.title ? 'movie' : 'tv'
   const detailUrl = `/${mediaType}/${media.id}`
 
@@ -48,9 +46,9 @@ function HeroBanner({ media, isLoading = false, onFavoriteClick }) {
           {media.vote_average !== undefined && (
             <RatingBadge rating={media.vote_average} size="md" />
           )}
-          {year && (
+          {date && (
             <span className="px-2.5 py-1 rounded-lg bg-surface/80 border border-border/50 text-xs font-mono text-muted">
-              {year}
+              {date}
             </span>
           )}
           <span className="px-2.5 py-1 rounded-lg bg-primary/20 text-primary text-xs font-semibold uppercase tracking-wider">

@@ -2,13 +2,8 @@ import { useTranslation } from 'react-i18next'
 import { useTrending } from '../hooks/useMovies.js'
 import { useTopRated } from '../hooks/useMovies.js'
 import { usePopular } from '../hooks/useMovies.js'
-import {
-  getImageUrl,
-  FALLBACK_POSTER,
-  TMDB_IMAGE_SIZES,
-} from '../utils/constants.js'
+import { useNewReleases } from '../hooks/useMovies.js'
 import useStore from '../store/useStore.js'
-import MediaCard from '../components/media/MediaCard.jsx'
 import MediaCardSkeleton from '../components/media/MediaCardSkeleton.jsx'
 import MediaCarousel from '../components/media/MediaCarousel.jsx'
 import HeroBanner from '../components/media/HeroBanner.jsx'
@@ -18,12 +13,19 @@ function HomePage() {
   const trending = useTrending(mediaType)
   const topRated = useTopRated(mediaType)
   const popular = usePopular(mediaType)
+  const newReleases = useNewReleases(mediaType)
   const isLoading =
-    trending.isLoading == true ||
-    topRated.isLoading == true ||
-    popular.isLoading == true
-  const isError = trending.isError || topRated.isError || popular.isError
-  const error = trending.error || topRated.error || popular.error
+    trending.isLoading ||
+    topRated.isLoading ||
+    popular.isLoading ||
+    newReleases.isLoading
+  const isError =
+    trending.isError ||
+    topRated.isError ||
+    popular.isError ||
+    newReleases.isError
+  const error =
+    trending.error || topRated.error || popular.error || newReleases.error
   //testing api calls
   const heroItem = trending.data?.results?.[0]
 
@@ -55,25 +57,35 @@ function HomePage() {
         </div>
       )}
       {/* Live Spotlight Verification */}
-       <HeroBanner media={heroItem} isLoading={trending.isLoading} />
+      <HeroBanner media={heroItem} isLoading={trending.isLoading} />
 
       <MediaCarousel
-        title={t('media.trending')}
+        title={t('media.trending') + ' ' + t('general.now')}
         items={trending.data?.results || []}
         isLoading={trending.isLoading}
         seeAllLink="/discover/trending"
+        badgeVariant="trending"
       />
       <MediaCarousel
-        title={t('media.popular')}
+        title={t('media.popular') + ' ' + t('general.now')}
         items={popular.data?.results || []}
         isLoading={popular.isLoading}
         seeAllLink="/discover/popular"
+        badgeVariant="popular"
       />
       <MediaCarousel
         title={t('media.top_rated')}
         items={topRated.data?.results || []}
         isLoading={topRated.isLoading}
         seeAllLink="/discover/top-rated"
+        badgeVariant="top_rated"
+      />
+      <MediaCarousel
+        title={t('media.new_releases')}
+        items={newReleases.data?.results || []}
+        isLoading={newReleases.isLoading}
+        seeAllLink="/discover/new-releases"
+        badgeVariant="new_releases"
       />
     </div>
   )

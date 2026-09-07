@@ -15,10 +15,10 @@
     "popular": "Popular",
     "by": "by",
     "noOverview": "No Overview Available",
-    "untitled":"Untitled",
+    "untitled": "Untitled",
     "viewDetails": "View Details",
-  "addToFavorites": "Add to Favorites",
-  "newReleases": "New Releases"
+    "addToFavorites": "Add to Favorites",
+    "new_releases": "New Releases"
   },
   "language": {
     "selectorLabel": "Language selector"
@@ -37,7 +37,7 @@
   "general": {
     "space": " ",
     "in": "in",
-    "seeAll":"See All",
-    "now":"now"
+    "seeAll": "See All",
+    "now": "now"
   }
 }

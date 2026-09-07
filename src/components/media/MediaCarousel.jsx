@@ -1,7 +1,12 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { FaChevronLeft, FaChevronRight, FaArrowRight, FaArrowLeft } from 'react-icons/fa'
+import {
+  FaChevronLeft,
+  FaChevronRight,
+  FaArrowRight,
+  FaArrowLeft,
+} from 'react-icons/fa'
 import MediaCard from './MediaCard.jsx'
 import MediaCardSkeleton from './MediaCardSkeleton.jsx'
 
@@ -11,6 +16,7 @@ function MediaCarousel({
   isLoading = false,
   seeAllLink,
   onCardClick,
+  badgeVariant,
 }) {
   const { t } = useTranslation()
   const scrollRef = useRef(null)
@@ -47,7 +53,11 @@ function MediaCarousel({
             <span className="text-sm font-semibold text-primary">
               {t('general.seeAll')}
             </span>
-           {isRTL ? <FaArrowLeft className="text-lg  group-hover:translate-x-1 text-primary/70" /> : <FaArrowRight className="text-lg  group-hover:translate-x-1 text-primary/70" />}
+            {isRTL ? (
+              <FaArrowLeft className="text-lg  group-hover:translate-x-1 text-primary/70" />
+            ) : (
+              <FaArrowRight className="text-lg  group-hover:translate-x-1 text-primary/70" />
+            )}
           </Link>
         ) : (
           <div className="group inline-flex  items-center justify-center gap-2  font-bold text-foreground hover:text-primary transition-colors duration-200">
@@ -59,10 +69,18 @@ function MediaCarousel({
         )}
         <div className="flex  items-center gap-4">
           <button className="carousel-btn" onClick={() => handleScroll('prev')}>
-            {isRTL?<FaChevronRight className="text-center text-xl text-primary/70 " />:<FaChevronLeft className="text-center text-xl text-primary/70 " />}
+            {isRTL ? (
+              <FaChevronRight className="text-center text-xl text-primary/70 " />
+            ) : (
+              <FaChevronLeft className="text-center text-xl text-primary/70 " />
+            )}
           </button>
           <button className="carousel-btn" onClick={() => handleScroll('next')}>
-            {isRTL?<FaChevronLeft className="text-center text-xl text-primary/70 rounded-md  " />:<FaChevronRight className="text-center text-xl text-primary/70 rounded-md  " />}
+            {isRTL ? (
+              <FaChevronLeft className="text-center text-xl text-primary/70 rounded-md  " />
+            ) : (
+              <FaChevronRight className="text-center text-xl text-primary/70 rounded-md  " />
+            )}
           </button>
         </div>
       </div>
@@ -82,7 +100,15 @@ function MediaCarousel({
             ))
           : items.map((media) => (
               <div key={media.id} className="snap-start">
-                <MediaCard media={media} onClick={() => onCardClick?.(media)} />
+                <MediaCard
+                  media={media}
+                  onClick={() => onCardClick?.(media)}
+                  badgeVariant={
+                    typeof badgeVariant === 'function'
+                      ? badgeVariant(media)
+                      : badgeVariant
+                  }
+                />
               </div>
             ))}
       </div>

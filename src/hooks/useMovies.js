@@ -3,6 +3,7 @@ import {
   fetchTrending,
   fetchTopRated,
   fetchPopular,
+  fetchNewReleases,
 } from '../services/tmdb/movieApi'
 import { useCurrentLanguage } from '../utils/constants.js'
 
@@ -22,6 +23,11 @@ export const mediaKeys = {
   popular: (type = 'movie', language = 'en-US') => [
     ...mediaKeys.type(type),
     'popular',
+    language,
+  ],
+  newReleases: (type = 'movie', language = 'en-US') => [
+    ...mediaKeys.type(type),
+    'new-releases',
     language,
   ],
   detail: (type = 'movie', id) => [...mediaKeys.type(type), 'detail', id],
@@ -59,9 +65,20 @@ export function usePopular(type = 'movie') {
   })
 }
 
+export function useNewReleases(type = 'movie') {
+  const language = useCurrentLanguage()
+
+  return useQuery({
+    queryKey: mediaKeys.newReleases(type, language),
+    queryFn: () => fetchNewReleases(type, 1, language),
+  })
+}
+
 export const useTrendingMovies = () => useTrending('movie')
 export const useTrendingShows = () => useTrending('tv')
 export const useTopRatedMovies = () => useTopRated('movie')
 export const useTopRatedShows = () => useTopRated('tv')
 export const usePopularMovies = () => usePopular('movie')
 export const usePopularShows = () => usePopular('tv')
+export const useNewReleasesMovies = () => useNewReleases('movie')
+export const useNewReleasesShows = () => useNewReleases('tv')

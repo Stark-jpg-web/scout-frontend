@@ -3,21 +3,23 @@ import {
   FALLBACK_POSTER,
   getImageUrl,
   TMDB_IMAGE_SIZES,
+  BADGE_CONFIGS,
+  formatDate,
 } from '../../utils/constants.js'
 import RatingBadge from '../ui/RatingBadge.jsx'
 
-function MediaCard({ media, onClick }) {
-  if (!media || media === null) return null
-
+function MediaCard({ media, onClick, badgeVariant = 'trending' }) {
   const { t } = useTranslation()
+
+  if (!media) return null
   const title =
     media.title ||
     media.name ||
     media.original_title ||
     media.original_name ||
     t('media.untitled')
-  const releaseDate = media.release_date || media.first_air_date
-  const releaseYear = releaseDate ? releaseDate.slice(0, 4) : null
+  const releaseYear = formatDate(media)
+  const badgeConfig = badgeVariant ? BADGE_CONFIGS[badgeVariant] : null
 
   return (
     <>
@@ -46,10 +48,13 @@ function MediaCard({ media, onClick }) {
           )}
         </div>
         <div className="media-card-metadata text-sm font-semibold text-foreground truncate group-hover:text-primary transition-colors space-y-2 text-center ">
-          <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/20 text-primary uppercase ">
-            {t('media.trending')} {t('general.in')}{' '}
-            {media.title ? t('media.movies') : t('media.shows')}
-          </span>
+          {badgeConfig && (
+            <span
+              className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase ${badgeConfig.className}`.trim()}
+            >
+              {t(badgeConfig.labelKey)}
+            </span>
+          )}
           <h2 className="media-card-title  text-sm font-semibold text-foreground truncate group-hover:text-primary transition-colors duration-200 text-center ">
             {title}
           </h2>
