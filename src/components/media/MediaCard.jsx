@@ -7,6 +7,8 @@ import {
   formatDate,
 } from '../../utils/constants.js'
 import RatingBadge from '../ui/RatingBadge.jsx'
+import FavoriteBadge from '../ui/FavoriteBadge.jsx'
+import Watchlist from '../ui/Watchlist.jsx'
 
 function MediaCard({ media, onClick, badgeVariant = 'trending' }) {
   const { t } = useTranslation()
@@ -46,6 +48,12 @@ function MediaCard({ media, onClick, badgeVariant = 'trending' }) {
               <RatingBadge size="sm" rating={media.vote_average} />
             </div>
           )}
+
+          {/* Quick Actions: Favorite & Watchlist */}
+          <div className="absolute flex flex-col gap-1.5 top-2 start-2 z-10 drop-shadow-md md:flex-row">
+            <Watchlist media={media}/>
+            <FavoriteBadge media={media} />
+          </div>
         </div>
         <div className="media-card-metadata text-sm font-semibold text-foreground truncate group-hover:text-primary transition-colors space-y-2 text-center ">
           {badgeConfig && (

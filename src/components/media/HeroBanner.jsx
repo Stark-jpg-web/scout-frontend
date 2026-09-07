@@ -4,6 +4,8 @@ import { FaHeart, FaInfoCircle } from 'react-icons/fa'
 import { getImageUrl, TMDB_IMAGE_SIZES } from '../../utils/constants.js'
 import RatingBadge from '../ui/RatingBadge.jsx'
 import { formatDate } from '../../utils/constants.js'
+import FavoriteBadge from '../ui/FavoriteBadge.jsx'
+import Watchlist from '../ui/Watchlist.jsx'
 function HeroBanner({ media, isLoading = false, onFavoriteClick }) {
   const { t } = useTranslation()
 
@@ -27,6 +29,10 @@ function HeroBanner({ media, isLoading = false, onFavoriteClick }) {
 
   return (
     <div className="relative w-full min-h-[380px] sm:min-h-[440px] md:min-h-[500px] rounded-2xl overflow-hidden bg-surface flex flex-col justify-end p-6 sm:p-8 md:p-10 mb-8 border border-border/40 shadow-xl group">
+      <div className="absolute scale-125 top-4 start-4 z-10 flex gap-2">
+        <FavoriteBadge media={media} />
+        <Watchlist media={media} />
+      </div>
       {/* 1. Backdrop Image with High-Res Sizing */}
       {media.backdrop_path && (
         <img

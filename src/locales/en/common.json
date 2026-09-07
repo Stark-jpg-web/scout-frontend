@@ -32,12 +32,22 @@
     "discover": "Discover",
     "search": "Search",
     "library": "My Library",
-    "favorites": "Favorites"
+    "favorites": "Favorites",
+    "genres": "Genres",
+    "about": "About Us",
+    "contact": "Contact"
   },
   "general": {
     "space": " ",
     "in": "in",
     "seeAll": "See All",
     "now": "now"
+  },
+  "footer": {
+    "description": "Your ultimate cinematic companion for discovering trending movies, TV shows, and curating your personal watchlist.",
+    "quickLinks": "Quick Links",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "rightsReserved": "All rights reserved."
   }
 }

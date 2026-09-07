@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom'
 import Navbar from './Navbar'
 import useStore from '../../store/useStore'
 import { useEffect } from 'react'
+import Footer from './Footer'
 
 function AppLayout() {
   const { theme } = useStore()
@@ -16,6 +17,7 @@ function AppLayout() {
       <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1">
         <Outlet />
       </main>
+      <Footer />
     </div>
   )
 }
