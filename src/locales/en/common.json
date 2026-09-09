@@ -41,7 +41,8 @@
     "space": " ",
     "in": "in",
     "seeAll": "See All",
-    "now": "now"
+    "now": "now",
+    "backToDiscover": "Back to Discover"
   },
   "footer": {
     "description": "Your ultimate cinematic companion for discovering trending movies, TV shows, and curating your personal watchlist.",
@@ -49,5 +50,25 @@
     "terms": "Terms of Service",
     "privacy": "Privacy Policy",
     "rightsReserved": "All rights reserved."
+  },
+  "genres": {
+    "action": "Action & Adventure",
+    "animation": "Animation",
+    "scifi": "Sci-Fi & Fantasy",
+    "comedy": "Comedy",
+    "horror": "Horror & Mystery",
+    "crime": "Crime",
+    "drama": "Drama",
+    "family": "Family",
+    "documentary": "Documentary"
+  },
+    "search": {
+    "placeholder": "Search for movies, TV shows, genres...",
+    "resultsFound": "Found {{count}} titles",
+    "exploreGenres": "Explore Popular Genres",
+    "noResults": "No results found for \"{{query}}\"",
+    "noResultsHint": "Try checking for typos or search for another title.",
+    "startSearching": "Search millions of movies and TV shows across TMDB."
   }
+
 }

@@ -5,13 +5,15 @@ import HomePage from '../pages/HomePage.jsx'
 import SearchPage from '../pages/SearchPage.jsx'
 import FavoritesPage from '../pages/FavoritesPage.jsx'
 import LibraryPage from '../pages/LibraryPage.jsx'
-
+import CategoryPage from '../pages/CategoryPage.jsx'
 function App() {
   return (
     <div>
       <Routes>
         <Route element={<AppLayout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/discover/:category" element={<CategoryPage />} />
+          <Route path="/discover/:id" element={<CategoryPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/library" element={<LibraryPage />} />

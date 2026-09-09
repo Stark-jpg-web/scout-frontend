@@ -95,3 +95,42 @@ export function fetchNewReleases(
     language,
   })
 }
+export function fetchByGenre(
+  mediaType = 'movie',
+  genreId = 16,
+  language = 'en-US',
+  page = 1
+) {
+  return fetchWithFallBack(`/discover/${mediaType}`, {
+    page,
+    language,
+    with_genres: genreId,
+    sort_by: 'popularity.desc',
+  })
+}
+export function fetchGenres(mediaType = 'movie', language = 'en-US') {
+  return fetchWithFallBack(`/genre/${mediaType}/list`, { language })
+}
+
+export function searchMedia(
+  query,
+  mediaType = 'movie',
+  page = 1,
+  language = 'en-US'
+) {
+  if (!query || typeof query !== 'string' || query.trim() === '') {
+    return Promise.resolve({
+      page: 1,
+      results: [],
+      total_pages: 0,
+      total_results: 0,
+    })
+  }
+
+  return fetchWithFallBack(`/search/${mediaType}`, {
+    query: query.trim(),
+    page,
+    language,
+    include_adult: false,
+  })
+}

@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+
 export const TMDB_IMAGE_BASE_URL =
   import.meta.env.VITE_TMDB_IMAGE_BASE_URL || 'https://image.tmdb.org/t/p'
 
@@ -63,7 +64,110 @@ export const BADGE_CONFIGS = {
     className: 'border-sky-500/30 bg-sky-500/20 text-sky-400',
     labelKey: 'media.new_releases',
   },
+  animation: {
+    className: 'border-purple-500/30 bg-purple-500/20 text-purple-400',
+    labelKey: 'genres.animation',
+  },
+  action: {
+    className: 'border-orange-500/30 bg-orange-500/20 text-orange-400',
+    labelKey: 'genres.action',
+  },
+  scifi: {
+    className: 'border-emerald-500/30 bg-emerald-500/20 text-emerald-400',
+    labelKey: 'genres.scifi',
+  },
+  comedy: {
+    className: 'border-yellow-500/30 bg-yellow-500/20 text-yellow-400',
+    labelKey: 'genres.comedy',
+  },
+  horror: {
+    className: 'border-rose-500/30 bg-rose-500/20 text-rose-400',
+    labelKey: 'genres.horror',
+  },
+  crime: {
+    className: 'border-red-500/30 bg-red-500/20 text-red-400',
+    labelKey: 'genres.crime',
+  },
+  drama: {
+    className: 'border-indigo-500/30 bg-indigo-500/20 text-indigo-400',
+    labelKey: 'genres.drama',
+  },
+  family: {
+    className: 'border-teal-500/30 bg-teal-500/20 text-teal-400',
+    labelKey: 'genres.family',
+  },
+  documentary: {
+    className: 'border-amber-500/30 bg-amber-500/20 text-amber-400',
+    labelKey: 'genres.documentary',
+  },
 }
+
+export const CURATED_GENRES = [
+  {
+    key: 'animation',
+    movieId: 16,
+    tvId: 16,
+    labelKey: 'genres.animation',
+    badgeVariant: 'animation',
+  },
+  {
+    key: 'action',
+    movieId: 28,
+    tvId: 10759,
+    labelKey: 'genres.action',
+    badgeVariant: 'action',
+  },
+  {
+    key: 'scifi',
+    movieId: 878,
+    tvId: 10765,
+    labelKey: 'genres.scifi',
+    badgeVariant: 'scifi',
+  },
+  {
+    key: 'comedy',
+    movieId: 35,
+    tvId: 35,
+    labelKey: 'genres.comedy',
+    badgeVariant: 'comedy',
+  },
+  {
+    key: 'horror',
+    movieId: 27,
+    tvId: 9648,
+    labelKey: 'genres.horror',
+    badgeVariant: 'horror',
+  },
+  {
+    key: 'crime',
+    movieId: 80,
+    tvId: 80,
+    labelKey: 'genres.crime',
+    badgeVariant: 'crime',
+  },
+  {
+    key: 'drama',
+    movieId: 18,
+    tvId: 18,
+    labelKey: 'genres.drama',
+    badgeVariant: 'drama',
+  },
+  {
+    key: 'family',
+    movieId: 10751,
+    tvId: 10751,
+    labelKey: 'genres.family',
+    badgeVariant: 'family',
+  },
+  {
+    key: 'documentary',
+    movieId: 99,
+    tvId: 99,
+    labelKey: 'genres.documentary',
+    badgeVariant: 'documentary',
+  },
+]
+
 
 export function badgeStyles(type) {
   return (

@@ -1,32 +1,57 @@
 import { useTranslation } from 'react-i18next'
-import { useTrending } from '../hooks/useMovies.js'
-import { useTopRated } from '../hooks/useMovies.js'
-import { usePopular } from '../hooks/useMovies.js'
-import { useNewReleases } from '../hooks/useMovies.js'
+import {
+  useTrending,
+  useTopRated,
+  usePopular,
+  useNewReleases,
+  useByGenre,
+} from '../hooks/useMovies.js'
+import { CURATED_GENRES } from '../utils/constants.js'
 import useStore from '../store/useStore.js'
 import MediaCardSkeleton from '../components/media/MediaCardSkeleton.jsx'
 import MediaCarousel from '../components/media/MediaCarousel.jsx'
 import HeroBanner from '../components/media/HeroBanner.jsx'
+
+function GenreCarouselSection({ genre, mediaType }) {
+  const { t } = useTranslation()
+  const genreId = mediaType === 'tv' ? genre.tvId : genre.movieId
+  const { data, isLoading } = useByGenre(mediaType, genreId)
+  return (
+    <MediaCarousel
+      title={t(genre.labelKey)}
+      items={data?.results || []}
+      isLoading={isLoading}
+      seeAllLink={`/discover/${genre.key}`}
+      badgeVariant={genre.badgeVariant}
+    />
+  )
+}
+
 function HomePage() {
   const { t } = useTranslation()
   const mediaType = useStore((state) => state.mediaType)
+
+  // Primary Discovery Queries
   const trending = useTrending(mediaType)
   const topRated = useTopRated(mediaType)
   const popular = usePopular(mediaType)
   const newReleases = useNewReleases(mediaType)
+
   const isLoading =
     trending.isLoading ||
     topRated.isLoading ||
     popular.isLoading ||
     newReleases.isLoading
+
   const isError =
     trending.isError ||
     topRated.isError ||
     popular.isError ||
     newReleases.isError
+
   const error =
     trending.error || topRated.error || popular.error || newReleases.error
-  //testing api calls
+
   const heroItem = trending.data?.results?.[0]
 
   return (
@@ -41,24 +66,26 @@ function HomePage() {
         </div>
       </div>
 
-      {/* Loading Skeleton Placeholder */}
+      {/* Loading Skeleton */}
       {isLoading && (
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {Array.from({ length: 8 }).map((_, i) => (
-            <MediaCardSkeleton key={i} className="" />
+            <MediaCardSkeleton key={i} />
           ))}
         </div>
       )}
+
       {/* Error State */}
       {isError && (
         <div className="p-4 rounded-xl bg-accent/10 border border-accent/20 text-accent">
-          <p className="font-semibold"></p>
           <p className="text-sm opacity-80">{error?.message}</p>
         </div>
       )}
-      {/* Live Spotlight Verification */}
+
+      {/* Live Spotlight Hero */}
       <HeroBanner media={heroItem} isLoading={trending.isLoading} />
 
+      {/* 4 Primary Discovery Carousels */}
       <MediaCarousel
         title={t('media.trending') + ' ' + t('general.now')}
         items={trending.data?.results || []}
@@ -87,6 +114,14 @@ function HomePage() {
         seeAllLink="/discover/new-releases"
         badgeVariant="new_releases"
       />
+
+      {CURATED_GENRES.map((genre) => (
+        <GenreCarouselSection
+          key={genre.key}
+          genre={genre}
+          mediaType={mediaType}
+        />
+      ))}
     </div>
   )
 }
