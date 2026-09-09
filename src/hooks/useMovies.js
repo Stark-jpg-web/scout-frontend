@@ -7,6 +7,7 @@ import {
   fetchByGenre,
   fetchGenres,
   searchMedia,
+  fetchMediaDetails,
 } from '../services/tmdb/movieApi'
 import { useCurrentLanguage } from '../utils/constants.js'
 
@@ -33,7 +34,7 @@ export const mediaKeys = {
     'new-releases',
     language,
   ],
-  detail: (type = 'movie', id) => [...mediaKeys.type(type), 'detail', id],
+
   genres: (type = 'movie', language = 'en-US') => [
     ...mediaKeys.type(type),
     'genres',
@@ -50,6 +51,12 @@ export const mediaKeys = {
     ...mediaKeys.type(type),
     'search',
     query.trim(),
+    language,
+  ],
+  detail: (type = 'movie', id, language = 'en-US') => [
+    ...mediaKeys.type(type),
+    'detail',
+    id,
     language,
   ],
 }
@@ -117,6 +124,16 @@ export function useSearchMedia(query, type = 'movie', page = 1) {
   })
 }
 
+export function useMediaDetails(type = 'movie', id) {
+  const language = useCurrentLanguage()
+  return useQuery({
+    queryKey: mediaKeys.detail(type, id, language),
+    queryFn: () => fetchMediaDetails(type, id, language),
+    enabled: Boolean(id),
+    staleTime: 5 * 60 * 1000,
+  })
+}
+
 export const useTrendingMovies = () => useTrending('movie')
 export const useTrendingShows = () => useTrending('tv')
 export const useTopRatedMovies = () => useTopRated('movie')
@@ -127,3 +144,5 @@ export const useNewReleasesMovies = () => useNewReleases('movie')
 export const useNewReleasesShows = () => useNewReleases('tv')
 export const useGenresMovies = () => useGenres('movie')
 export const useGenresShows = () => useGenres('tv')
+export const useMediaDetailsMovie = (id) => useMediaDetails('movie', id)
+export const useMediaDetailsShow = (id) => useMediaDetails('tv', id)

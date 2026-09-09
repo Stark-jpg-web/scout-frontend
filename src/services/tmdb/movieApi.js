@@ -134,3 +134,34 @@ export function searchMedia(
     include_adult: false,
   })
 }
+export async function fetchMediaDetails(
+  type = 'movie',
+  id,
+  language = 'en-US'
+) {
+  if (!id) {
+    throw new Error('Media ID is required.')
+  }
+  const data = await fetchWithFallBack(`/${type}/${id}`, {
+    language,
+    append_to_response: 'videos,credits,recommendations,similar',
+  })
+
+  if (
+    language.startsWith('ar') &&
+    (!data.overview?.trim() || !data.tagline?.trim())
+  ) {
+    try {
+      const enData = await apiFetch(`/${type}/${id}`, {
+        language: 'en-US',
+        append_to_response: 'videos,credits,recommendations,similar',
+      })
+      if (!data.overview?.trim()) data.overview = enData.overview || ''
+      if (!data.tagline?.trim()) data.tagline = enData.tagline || ''
+    } catch (err) {
+      console.warn('English details fallback has failed:', err)
+    }
+  }
+  return data
+}
+

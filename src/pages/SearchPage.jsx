@@ -53,7 +53,9 @@ function SearchPage() {
             </h1>
             <p className="text-sm text-muted">
               {hasSearched
-                ? t('search.resultsFound', { count: totalResults.toLocaleString() })
+                ? t('search.resultsFound', {
+                    count: totalResults.toLocaleString(),
+                  })
                 : t('search.startSearching')}
             </p>
           </div>
@@ -128,7 +130,7 @@ function SearchPage() {
           {isLoading || isFetching ? (
             <MediaGrid isLoading={true} skeletonCount={12} />
           ) : results.length > 0 ? (
-            <MediaGrid items={results} badgeVariant="popular" />
+            <MediaGrid items={results} badgeVariant="" />
           ) : (
             /* No Results Empty State */
             <div className="py-16 text-center space-y-3 rounded-2xl bg-surface/30 border border-border/40">

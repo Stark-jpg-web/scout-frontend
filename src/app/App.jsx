@@ -6,6 +6,7 @@ import SearchPage from '../pages/SearchPage.jsx'
 import FavoritesPage from '../pages/FavoritesPage.jsx'
 import LibraryPage from '../pages/LibraryPage.jsx'
 import CategoryPage from '../pages/CategoryPage.jsx'
+import MediaDetailsPage from '../pages/MediaDetailsPage.jsx'
 function App() {
   return (
     <div>
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/discover/:category" element={<CategoryPage />} />
           <Route path="/discover/:id" element={<CategoryPage />} />
+          <Route path="/:mediaType/:id" element={<MediaDetailsPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/library" element={<LibraryPage />} />

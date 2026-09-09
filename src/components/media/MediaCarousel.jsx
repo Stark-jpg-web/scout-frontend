@@ -15,7 +15,6 @@ function MediaCarousel({
   items = [],
   isLoading = false,
   seeAllLink,
-  onCardClick,
   badgeVariant,
 }) {
   const { t } = useTranslation()

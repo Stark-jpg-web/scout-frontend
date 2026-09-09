@@ -19,7 +19,12 @@
     "untitled": "بدون عنوان",
     "viewDetails": "عرض التفاصيل",
     "addToFavorites": "إضافة للمفضلة",
-    "new_releases": "الإصدارات الجديدة"
+    "new_releases": "الإصدارات الجديدة",
+    "hour": "س",
+    "minute": "د",
+    "trailer": "إعلان",
+    "noTrailer": "لا يوجد إعلان متاح",
+    "close": "إغلاق"
   },
   "language": {
     "selectorLabel": "محدد اللغة"
@@ -63,13 +68,32 @@
     "family": "عائلي",
     "documentary": "وثائقي"
   },
-    "search": {
+  "search": {
     "placeholder": "ابحث عن أفلام، مسلسلات، تصنيفات...",
     "resultsFound": "تم العثور على {{count}} عنوان",
     "exploreGenres": "استكشف أشهر التصنيفات",
     "noResults": "لم يتم العثور على نتائج لـ \"{{query}}\"",
     "noResultsHint": "تأكد من صحة الكلمات أو ابحث عن عنوان آخر.",
     "startSearching": "ابحث في ملايين الأفلام والمسلسلات عبر TMDB."
+  },
+  "details": {
+    "playTrailer": "مشاهدة الإعلان",
+    "cast": "طاقم التمثيل",
+    "crew": "طاقم العمل المميز",
+    "information": "معلومات",
+    "status": "الحالة",
+    "releaseDate": "تاريخ الإصدار",
+    "firstAirDate": "تاريخ أول عرض",
+    "runtime": "المدة",
+    "seasons": "المواسم",
+    "episodes": "الحلقات",
+    "budget": "الميزانية",
+    "revenue": "الإيرادات",
+    "originalLanguage": "اللغة الأصلية",
+    "productionCompanies": "شركات الإنتاج",
+    "recommendations": "أعمال مشابهة",
+    "back": "رجوع",
+    "noCast": "لا تتوفر معلومات عن طاقم التمثيل",
+    "noRecommendations": "لا تتوفر توصيات مشابهة"
   }
-
 }

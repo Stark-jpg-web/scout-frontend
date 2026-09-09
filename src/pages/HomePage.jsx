@@ -5,6 +5,7 @@ import {
   usePopular,
   useNewReleases,
   useByGenre,
+
 } from '../hooks/useMovies.js'
 import { CURATED_GENRES } from '../utils/constants.js'
 import useStore from '../store/useStore.js'
@@ -16,6 +17,7 @@ function GenreCarouselSection({ genre, mediaType }) {
   const { t } = useTranslation()
   const genreId = mediaType === 'tv' ? genre.tvId : genre.movieId
   const { data, isLoading } = useByGenre(mediaType, genreId)
+
   return (
     <MediaCarousel
       title={t(genre.labelKey)}
@@ -53,6 +55,10 @@ function HomePage() {
     trending.error || topRated.error || popular.error || newReleases.error
 
   const heroItem = trending.data?.results?.[0]
+
+
+
+
 
   return (
     <div className="space-y-6">
@@ -122,6 +128,8 @@ function HomePage() {
           mediaType={mediaType}
         />
       ))}
+
+
     </div>
   )
 }

@@ -175,3 +175,44 @@ export function badgeStyles(type) {
     'bg-primary/20 text-primary border border-primary/30'
   )
 }
+export function formatRunTime(minutes, t) {
+  if (!minutes || minutes <= 0) {
+    return null
+  }
+  const hours = Math.floor(minutes / 60)
+  const remainingMinutes = minutes % 60
+  if(hours===0){
+    return `${remainingMinutes}${t('media.minute')}`
+  }
+  if(remainingMinutes===0){
+    return `${hours}${t('media.hour')}`
+  }
+
+  return `${hours}${t('media.hour')} ${remainingMinutes}${t('media.minute')}`
+}
+
+export function formatCurrency(amount){
+  if(!amount || amount===0){
+    return "N/A"
+  }
+  return new Intl.NumberFormat('en-US',{
+    style:'currency',
+    currency:'USD',
+    minimumFractionDigits:0
+  }).format(amount)
+}
+
+export function formatFullDate(dateStr, locale = 'en-US') {
+  if (!dateStr) {
+    return 'N/A'
+  }
+  const date = new Date(dateStr)
+  if (isNaN(date.getTime())) {
+    return 'N/A'
+  }
+  return new Intl.DateTimeFormat(locale, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date)
+}
