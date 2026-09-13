@@ -94,5 +94,23 @@
     "back": "Back",
     "noCast": "No cast information available",
     "noRecommendations": "No recommendations available"
+  },
+  "library": {
+    "emptyFavoritesTitle": "No favorites saved yet",
+    "emptyFavoritesDesc": "Explore movies and TV shows and tap the heart icon to curate your personal collection.",
+    "emptyWatchlistTitle": "Your Watchlist is empty",
+    "emptyWatchlistDesc": "Save titles you want to watch later so you never lose track of great cinema.",
+    "emptyFilterTitle": "No matches found",
+    "emptyFilterDesc": "Try adjusting your search terms or filters to find what you're looking for.",
+    "exploreDiscover": "Explore Discover",
+    "searchPlaceholder": "Search in your collection...",
+    "sortBy": "Sort by",
+    "sortDateDesc": "Recently Added",
+    "sortDateAsc": "Oldest Added",
+    "sortRatingDesc": "Highest Rating",
+    "sortRatingAsc": "Lowest Rating",
+    "sortTitleAsc": "Title (A–Z)",
+    "sortTitleDesc": "Title (Z–A)",
+    "itemsCount": "{{count}} titles"
   }
 }
