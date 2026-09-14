@@ -4,9 +4,10 @@ import AppLayout from '../components/layout/AppLayout.jsx'
 import HomePage from '../pages/HomePage.jsx'
 import SearchPage from '../pages/SearchPage.jsx'
 import FavoritesPage from '../pages/FavoritesPage.jsx'
-import LibraryPage from '../pages/LibraryPage.jsx'
+import WatchlistPage from '../pages/WatchlistPage.jsx'
 import CategoryPage from '../pages/CategoryPage.jsx'
 import MediaDetailsPage from '../pages/MediaDetailsPage.jsx'
+
 function App() {
   return (
     <div>
@@ -18,7 +19,7 @@ function App() {
           <Route path="/:mediaType/:id" element={<MediaDetailsPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
-          <Route path="/library" element={<LibraryPage />} />
+          <Route path="/watchlist" element={<WatchlistPage />} />
           <Route path="*" element={<HomePage />} />
         </Route>
       </Routes>

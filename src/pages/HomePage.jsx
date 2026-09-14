@@ -5,13 +5,13 @@ import {
   usePopular,
   useNewReleases,
   useByGenre,
-
 } from '../hooks/useMovies.js'
 import { CURATED_GENRES } from '../utils/constants.js'
 import useStore from '../store/useStore.js'
 import MediaCardSkeleton from '../components/media/MediaCardSkeleton.jsx'
 import MediaCarousel from '../components/media/MediaCarousel.jsx'
 import HeroBanner from '../components/media/HeroBanner.jsx'
+import { FaSearch } from 'react-icons/fa'
 
 function GenreCarouselSection({ genre, mediaType }) {
   const { t } = useTranslation()
@@ -56,17 +56,13 @@ function HomePage() {
 
   const heroItem = trending.data?.results?.[0]
 
-
-
-
-
   return (
     <div className="space-y-6">
       {/* Header & Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="space-y-1">
           <h1 className="text-4xl font-bold tracking-tight text-foreground">
-            {t('app.name')}
+            {t('app.name')} 
           </h1>
           <p className="text-base text-muted">{t('app.tagline')}</p>
         </div>
@@ -128,8 +124,6 @@ function HomePage() {
           mediaType={mediaType}
         />
       ))}
-
-
     </div>
   )
 }

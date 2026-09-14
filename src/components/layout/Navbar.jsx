@@ -5,12 +5,10 @@ import ThemeToggle from '../ui/ThemeToggle'
 import LanguageBtn from '../ui/LanguageSwitcher'
 import MediaTypeSwitcher from '../ui/MediaTypeSwitcher'
 
-
 function Navbar() {
   const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const location = useLocation()
-
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -35,7 +33,7 @@ function Navbar() {
       to: '/favorites',
       label: t('navigation.favorites'),
     },
-    { to: '/library', label: t('navigation.library') },
+    { to: '/watchlist', label: t('navigation.watchlist') },
   ]
 
   const getNavLinkClass = ({ isActive }) =>

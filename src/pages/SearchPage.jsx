@@ -6,6 +6,7 @@ import { useSearchMedia } from '../hooks/useMovies.js'
 import { useDebounce } from '../hooks/useDebounce.js'
 import { CURATED_GENRES } from '../utils/constants.js'
 import MediaGrid from '../components/media/MediaGrid.jsx'
+import { FaSearch } from 'react-icons/fa'
 
 function SearchPage() {
   const { t } = useTranslation()
@@ -48,8 +49,9 @@ function SearchPage() {
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="space-y-1">
-            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
-              {t('navigation.search')}
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground flex items-center gap-2">
+              {t('navigation.search')}{' '}
+              <FaSearch className="text-primary text-2xl " />
             </h1>
             <p className="text-sm text-muted">
               {hasSearched

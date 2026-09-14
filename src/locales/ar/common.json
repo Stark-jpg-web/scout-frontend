@@ -37,7 +37,7 @@
     "mainLabel": "الرئيسية",
     "discover": "اكتشف",
     "search": "بحث",
-    "library": "مكتبتي",
+    "watchlist": "قائمة المشاهدة",
     "favorites": "المفضلة",
     "genres": "التصنيفات",
     "about": "من نحن",
@@ -58,6 +58,7 @@
     "rightsReserved": "جميع الحقوق محفوظة."
   },
   "genres": {
+    "all": "جميع التصنيفات",
     "action": "أكشن ومغامرات",
     "animation": "رسوم متحركة",
     "scifi": "خيال علمي وفانتازيا",
@@ -96,7 +97,29 @@
     "noCast": "لا تتوفر معلومات عن طاقم التمثيل",
     "noRecommendations": "لا تتوفر توصيات مشابهة"
   },
-  "library": {
+  "watchlist": {
+    "title": "قائمة المشاهدة",
+    "watchlist": "قائمة المشاهدة",
+    "emptyFavoritesTitle": "لم تقم بإضافة أي عناصر للمفضلة بعد",
+    "emptyFavoritesDesc": "استكشف الأفلام والمسلسلات واضغط على أيقونة القلب لبناء قائمتك المفضلة.",
+    "emptyWatchlistTitle": "قائمة المشاهدة فارغة",
+    "emptyWatchlistDesc": "احفظ الأعمال التي تود مشاهدتها لاحقاً لتصل إليها بسهولة في أي وقت.",
+    "emptyFilterTitle": "لا توجد نتائج مطابقة",
+    "emptyFilterDesc": "جرب تغيير مصطلحات البحث أو الفلاتر للعثور على ما تبحث عنه.",
+    "exploreDiscover": "استكشف الآن",
+    "searchPlaceholder": "ابحث في قائمتك...",
+    "sortBy": "ترتيب حسب",
+    "sortDateDesc": "أضيف حديثاً",
+    "sortDateAsc": "الأقدم إضافة",
+    "sortRatingDesc": "الأعلى تقييماً",
+    "sortRatingAsc": "الأقل تقييماً",
+    "sortTitleAsc": "العنوان (أ-ي)",
+    "sortTitleDesc": "العنوان (ي-أ)",
+    "itemsCount": "{{count}} أعمال"
+  },
+  "favorites": {
+    "title": "المفضلة",
+    "favorites": "المفضلة",
     "emptyFavoritesTitle": "لم تقم بإضافة أي عناصر للمفضلة بعد",
     "emptyFavoritesDesc": "استكشف الأفلام والمسلسلات واضغط على أيقونة القلب لبناء قائمتك المفضلة.",
     "emptyWatchlistTitle": "قائمة المشاهدة فارغة",

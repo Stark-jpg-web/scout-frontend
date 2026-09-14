@@ -9,7 +9,7 @@ const Footer = () => {
   const links = {
     Discover: { to: '/', label: t('navigation.discover') },
     Search: { to: '/search', label: t('navigation.search') },
-    Library: { to: '/library', label: t('navigation.library') },
+    Watchlist: { to: '/watchlist', label: t('navigation.watchlist') },
     Favorites: { to: '/favorites', label: t('navigation.favorites') },
     Genres: { to: '/genres', label: t('navigation.genres') },
     About: { to: '/about', label: t('navigation.about') },

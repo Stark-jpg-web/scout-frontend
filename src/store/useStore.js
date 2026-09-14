@@ -60,6 +60,7 @@ export const useStore = create(
                   media_type:
                     media.media_type || (media.title ? 'movie' : 'tv'),
                   addedAt: Date.now(),
+                  genre_ids: media.genre_ids || [],
                 }
               }
               return { favorites: next }
@@ -93,6 +94,7 @@ export const useStore = create(
                   media_type:
                     media.media_type || (media.title ? 'movie' : 'tv'),
                   addedAt: Date.now(),
+                  genre_ids: media.genre_ids || media.genres?.map((g) => g.id) || [],
                 }
               }
               return { watchlist: next }

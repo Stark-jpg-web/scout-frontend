@@ -1,7 +1,9 @@
 import MediaCard from './MediaCard.jsx'
 import MediaCardSkeleton from './MediaCardSkeleton.jsx'
-
-// this is for the sell all pages
+import EmptyState from '../library/EmptyState.jsx'
+import { ImLibrary } from 'react-icons/im'
+import { useTranslation } from 'react-i18next'
+// this is for the see all pages
 function MediaGrid({
   items = [],
   isLoading = false,
@@ -9,6 +11,7 @@ function MediaGrid({
   badgeVariant,
   className = '',
 }) {
+  const { t } = useTranslation()
   if (isLoading) {
     return (
       <div
