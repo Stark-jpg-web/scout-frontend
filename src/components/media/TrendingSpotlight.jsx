@@ -85,44 +85,95 @@ function TrendingSpotlight({ items = [], isLoading = false, onCardClick }) {
     const updateVisibility = () => {
       if (!sectionRef.current) return
       const rect = sectionRef.current.getBoundingClientRect()
-      // If bottom of spotlight is above top viewport navigation (80px),
-      // or top of spotlight is below window bottom, it has scrolled past!
-      const isVisible = rect.bottom > 80 && rect.top < window.innerHeight - 50
+
+      // Guard for unmeasured initial layout or test environments
+      if (rect.height === 0 && rect.width === 0 && rect.bottom === 0) {
+        return
+      }
+
+      const vh = window.innerHeight || document.documentElement.clientHeight
+
+      // Calculate visible height of the spotlight section (accounting for ~70px top navbar)
+      const visibleTop = Math.max(rect.top, 70)
+      const visibleBottom = Math.min(rect.bottom, vh)
+      const visibleHeight = Math.max(0, visibleBottom - visibleTop)
+
+      // Section is in view only if:
+      // 1. At least 200px of spotlight height is actively visible inside the viewport
+      // 2. The spotlight has not scrolled past the top (rect.bottom > 180)
+      // 3. The spotlight has entered the viewport (rect.top < vh - 80)
+      const isVisible =
+        visibleHeight >= 200 && rect.bottom > 180 && rect.top < vh - 80
+
       setIsInView(isVisible)
     }
 
     // Initial check
     updateVisibility()
 
-    // 1. IntersectionObserver for native viewport
+    // 1. IntersectionObserver for primary viewport boundary tracking
     let observer = null
     if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
       observer = new IntersectionObserver(
-        () => {
-          updateVisibility()
+        (entries) => {
+          const entry = entries[0]
+          if (!entry) return
+          const ratio =
+            typeof entry.intersectionRatio === 'number'
+              ? entry.intersectionRatio
+              : 1
+          if (!entry.isIntersecting || ratio < 0.2) {
+            setIsInView(false)
+          } else {
+            updateVisibility()
+          }
         },
-        { threshold: [0, 0.1, 0.25] }
+        { threshold: [0, 0.1, 0.2, 0.35, 0.5, 0.75, 1.0] }
       )
       observer.observe(el)
     }
 
-    // 2. Global window & container capture scroll listener (handles native/mobile & desktop scroll)
+    // 2. Global window & document capture scroll listeners (handles desktop & mobile window scroll)
     const handleScroll = () => {
       updateVisibility()
     }
     window.addEventListener('scroll', handleScroll, { passive: true, capture: true })
+    document.addEventListener('scroll', handleScroll, { passive: true, capture: true })
+    window.addEventListener('resize', handleScroll, { passive: true })
 
-    // 3. SmoothScrollbar listener for desktop momentum scrolling
+    // 3. Native scroll container listener (for smooth-scroll-viewport overflow element)
+    const scrollContainer = document.getElementById('smooth-scroll-viewport')
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', handleScroll, { passive: true })
+    }
+
+    // 4. SmoothScrollbar momentum physics listener
     let removeScrollListener = null
     if (scrollbar && typeof scrollbar.addListener === 'function') {
       scrollbar.addListener(handleScroll)
       removeScrollListener = () => scrollbar.removeListener(handleScroll)
     }
 
+    // 5. Tab visibility change (freezes timer when user switches browser tabs)
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        setIsInView(false)
+      } else {
+        updateVisibility()
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
     return () => {
       if (observer) observer.disconnect()
       window.removeEventListener('scroll', handleScroll, { capture: true })
+      document.removeEventListener('scroll', handleScroll, { capture: true })
+      window.removeEventListener('resize', handleScroll)
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', handleScroll)
+      }
       if (removeScrollListener) removeScrollListener()
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
     }
   }, [scrollbar])
 
@@ -307,16 +358,17 @@ function TrendingSpotlight({ items = [], isLoading = false, onCardClick }) {
         {/* GPU-Accelerated CSS Progress Bar (Compositor Only, Zero Re-renders) */}
         <div className="absolute top-0 inset-x-0 z-30 h-1 bg-border/20 overflow-hidden">
           <div
-            key={`progress-${currentIndex}-${isPlaying && !isHovered}`}
+            key={`progress-${currentIndex}-${isPlaying && !isHovered && isInView}`}
             className={`h-full bg-gradient-to-r from-primary/80 via-primary to-accent shadow-[0_0_8px_rgba(215,168,71,0.7)] ${
               isRTL ? 'origin-right' : 'origin-left'
             }`}
             style={{
               animation:
-                isPlaying && !isHovered
+                isPlaying && !isHovered && isInView
                   ? `spotlightProgress ${AUTOPLAY_DELAY_MS}ms linear forwards`
                   : 'none',
-              transform: isPlaying && !isHovered ? undefined : 'scaleX(0)',
+              transform:
+                isPlaying && !isHovered && isInView ? undefined : 'scaleX(0)',
             }}
           />
         </div>

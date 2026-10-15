@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, act } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import TrendingSpotlight from '../TrendingSpotlight.jsx'
 import useStore from '../../../store/useStore.js'
@@ -91,5 +91,54 @@ describe('TrendingSpotlight Component', () => {
     const viewDetailsButtons = screen.getAllByText('media.viewDetails')
     fireEvent.click(viewDetailsButtons[0])
     expect(handleCardClick).toHaveBeenCalledWith(sampleItems[0])
+  })
+
+  it('freezes autoplay timer when scrolled out of viewport', () => {
+    vi.useFakeTimers()
+    render(
+      <BrowserRouter>
+        <TrendingSpotlight items={sampleItems} isLoading={false} />
+      </BrowserRouter>
+    )
+
+    // Initially at Dune (#1)
+    expect(
+      screen.getByRole('heading', { name: 'Dune: Part Two' })
+    ).toBeInTheDocument()
+
+    // Advances to slide 2 (Oppenheimer) after 5.5s
+    act(() => {
+      vi.advanceTimersByTime(5500)
+    })
+    expect(
+      screen.getByRole('heading', { name: 'Oppenheimer' })
+    ).toBeInTheDocument()
+
+    // Mock scrolling past the spotlight (scrolled out of view above navbar)
+    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({
+      top: -800,
+      bottom: 60,
+      left: 0,
+      right: 1000,
+      width: 1000,
+      height: 860,
+    })
+
+    act(() => {
+      fireEvent.scroll(window)
+    })
+
+    // Advance 12 seconds while out of view
+    act(() => {
+      vi.advanceTimersByTime(12000)
+    })
+
+    // Must still be Oppenheimer: autoplay remained frozen while scrolled below!
+    expect(
+      screen.getByRole('heading', { name: 'Oppenheimer' })
+    ).toBeInTheDocument()
+
+    vi.useRealTimers()
+    vi.restoreAllMocks()
   })
 })
