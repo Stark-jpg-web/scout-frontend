@@ -20,6 +20,7 @@ import RatingBadge from '../ui/RatingBadge.jsx'
 import FavoriteBadge from '../ui/FavoriteBadge.jsx'
 import Watchlist from '../ui/Watchlist.jsx'
 import useLibrary from '../../hooks/useLibrary.js'
+import { useSmoothScrollbar } from '../ui/SmoothScrollContext.js'
 
 const AUTOPLAY_DELAY_MS = 5500
 
@@ -33,6 +34,11 @@ function TrendingSpotlight({ items = [], isLoading = false, onCardClick }) {
   const touchStartRef = useRef({ x: 0, y: 0, time: 0 })
   const thumbnailRailRef = useRef(null)
   const activeThumbRef = useRef(null)
+  const sectionRef = useRef(null)
+  const isFirstRender = useRef(true)
+
+  const [isInView, setIsInView] = useState(true)
+  const scrollbar = useSmoothScrollbar()
 
   const totalItems = items.length
 
@@ -72,29 +78,90 @@ function TrendingSpotlight({ items = [], isLoading = false, onCardClick }) {
     }
   }, [currentIndex, items, totalItems])
 
-  // Autoplay timer: pauses cleanly when hovered or paused by user
+  // Viewport detection: pause autoplay if the user scrolls past the spotlight area
   useEffect(() => {
-    if (!isPlaying || isHovered || totalItems <= 1) return
+    const el = sectionRef.current
+    if (!el) return
+
+    // 1. Native / Mobile viewport observer
+    let observer = null
+    if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          setIsInView(entry.isIntersecting)
+        },
+        { threshold: 0.1 }
+      )
+      observer.observe(el)
+    }
+
+    // 2. SmoothScrollbar listener for desktop virtual scrolling
+    let removeScrollListener = null
+    if (scrollbar && typeof scrollbar.addListener === 'function') {
+      const handleScrollbarScroll = () => {
+        if (!sectionRef.current) return
+        const rect = sectionRef.current.getBoundingClientRect()
+        // Scrolled past if bottom is above viewport or top is below viewport
+        const inView = rect.bottom > 60 && rect.top < window.innerHeight - 60
+        setIsInView(inView)
+      }
+      scrollbar.addListener(handleScrollbarScroll)
+      removeScrollListener = () =>
+        scrollbar.removeListener(handleScrollbarScroll)
+    }
+
+    return () => {
+      if (observer) observer.disconnect()
+      if (removeScrollListener) removeScrollListener()
+    }
+  }, [scrollbar])
+
+  // Autoplay timer: pauses cleanly when hovered, paused by user, or scrolled past the area
+  useEffect(() => {
+    if (!isPlaying || isHovered || !isInView || totalItems <= 1) return
 
     const timer = setInterval(() => {
       handleNext()
     }, AUTOPLAY_DELAY_MS)
 
     return () => clearInterval(timer)
-  }, [isPlaying, isHovered, totalItems, handleNext, currentIndex])
+  }, [isPlaying, isHovered, isInView, totalItems, handleNext, currentIndex])
 
-  // Scroll active thumbnail smoothly into view
+  // Auto-scroll to spotlight area upon movie/show change (skip initial mount)
   useEffect(() => {
-    if (
-      activeThumbRef.current &&
-      thumbnailRailRef.current &&
-      typeof activeThumbRef.current.scrollIntoView === 'function'
-    ) {
-      activeThumbRef.current.scrollIntoView({
-        behavior: 'smooth',
-        inline: 'center',
-        block: 'nearest',
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
+
+    if (!sectionRef.current) return
+
+    if (scrollbar && typeof scrollbar.scrollIntoView === 'function') {
+      scrollbar.scrollIntoView(sectionRef.current, {
+        offsetTop: 12,
+        onlyScrollIfNeeded: false,
       })
+    } else if (typeof sectionRef.current.scrollIntoView === 'function') {
+      sectionRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    }
+  }, [currentIndex, scrollbar])
+
+  // Scroll active thumbnail smoothly into view inside horizontal rail
+  useEffect(() => {
+    if (thumbnailRailRef.current && activeThumbRef.current) {
+      const rail = thumbnailRailRef.current
+      const thumb = activeThumbRef.current
+      const targetLeft =
+        thumb.offsetLeft - rail.clientWidth / 2 + thumb.clientWidth / 2
+      if (typeof rail.scrollTo === 'function') {
+        rail.scrollTo({
+          left: targetLeft,
+          behavior: 'smooth',
+        })
+      }
     }
   }, [currentIndex])
 
@@ -160,7 +227,10 @@ function TrendingSpotlight({ items = [], isLoading = false, onCardClick }) {
     : null
 
   return (
-    <section className="relative flex flex-col space-y-3 w-full py-1 mb-4 select-none">
+    <section
+      ref={sectionRef}
+      className="relative flex flex-col space-y-3 w-full py-1 mb-4 select-none"
+    >
       {/* 1. Header Bar: Title, Subtitle, Slide Counter & Compact Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 px-1">
         <div className="space-y-0.5">
