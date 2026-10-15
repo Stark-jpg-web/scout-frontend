@@ -57,19 +57,19 @@ describe('TrendingSpotlight Component', () => {
     expect(container.firstChild).toBeNull()
   })
 
-  it('renders spotlight with correct rank starting from #2', () => {
+  it('renders spotlight with correct rank starting from #1', () => {
     render(
       <BrowserRouter>
         <TrendingSpotlight items={sampleItems} isLoading={false} />
       </BrowserRouter>
     )
 
-    // Check title of first passed item (which is #2 overall trending)
+    // Check title of first passed item (which is #1 overall trending)
     expect(
       screen.getByRole('heading', { name: 'Dune: Part Two' })
     ).toBeInTheDocument()
-    // Rank label starting from #2
-    expect(screen.getByText('#2 media.trending')).toBeInTheDocument()
+    // Rank label starting from #1
+    expect(screen.getByText('#1 media.trending')).toBeInTheDocument()
     // Check overview
     expect(
       screen.getByText('Paul Atreides unites with Chani and the Fremen.')

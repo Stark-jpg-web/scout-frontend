@@ -10,7 +10,6 @@ import {
 import { CURATED_GENRES, openMediaDetail } from '../utils/constants.js'
 import useStore from '../store/useStore.js'
 import MediaCarousel from '../components/media/MediaCarousel.jsx'
-import HeroBanner from '../components/media/HeroBanner.jsx'
 import TrendingSpotlight from '../components/media/TrendingSpotlight.jsx'
 import MediaTypeSwitcher from '../components/ui/MediaTypeSwitcher.jsx'
 import { useNavigate } from 'react-router-dom'
@@ -77,8 +76,6 @@ function HomePage() {
 
   const error =
     trending.error || topRated.error || popular.error || newReleases.error
-
-  const heroItem = trending.data?.results?.[0]
 
   return (
     <div className="space-y-6">
