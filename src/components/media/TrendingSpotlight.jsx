@@ -35,7 +35,6 @@ function TrendingSpotlight({ items = [], isLoading = false, onCardClick }) {
   const thumbnailRailRef = useRef(null)
   const activeThumbRef = useRef(null)
   const sectionRef = useRef(null)
-  const isFirstRender = useRef(true)
 
   const [isInView, setIsInView] = useState(true)
   const scrollbar = useSmoothScrollbar()
@@ -78,40 +77,51 @@ function TrendingSpotlight({ items = [], isLoading = false, onCardClick }) {
     }
   }, [currentIndex, items, totalItems])
 
-  // Viewport detection: pause autoplay if the user scrolls past the spotlight area
+  // Viewport detection: freeze autoplay timer whenever user scrolls past the spotlight area
   useEffect(() => {
     const el = sectionRef.current
     if (!el) return
 
-    // 1. Native / Mobile viewport observer
+    const updateVisibility = () => {
+      if (!sectionRef.current) return
+      const rect = sectionRef.current.getBoundingClientRect()
+      // If bottom of spotlight is above top viewport navigation (80px),
+      // or top of spotlight is below window bottom, it has scrolled past!
+      const isVisible = rect.bottom > 80 && rect.top < window.innerHeight - 50
+      setIsInView(isVisible)
+    }
+
+    // Initial check
+    updateVisibility()
+
+    // 1. IntersectionObserver for native viewport
     let observer = null
     if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
       observer = new IntersectionObserver(
-        ([entry]) => {
-          setIsInView(entry.isIntersecting)
+        () => {
+          updateVisibility()
         },
-        { threshold: 0.1 }
+        { threshold: [0, 0.1, 0.25] }
       )
       observer.observe(el)
     }
 
-    // 2. SmoothScrollbar listener for desktop virtual scrolling
+    // 2. Global window & container capture scroll listener (handles native/mobile & desktop scroll)
+    const handleScroll = () => {
+      updateVisibility()
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true, capture: true })
+
+    // 3. SmoothScrollbar listener for desktop momentum scrolling
     let removeScrollListener = null
     if (scrollbar && typeof scrollbar.addListener === 'function') {
-      const handleScrollbarScroll = () => {
-        if (!sectionRef.current) return
-        const rect = sectionRef.current.getBoundingClientRect()
-        // Scrolled past if bottom is above viewport or top is below viewport
-        const inView = rect.bottom > 60 && rect.top < window.innerHeight - 60
-        setIsInView(inView)
-      }
-      scrollbar.addListener(handleScrollbarScroll)
-      removeScrollListener = () =>
-        scrollbar.removeListener(handleScrollbarScroll)
+      scrollbar.addListener(handleScroll)
+      removeScrollListener = () => scrollbar.removeListener(handleScroll)
     }
 
     return () => {
       if (observer) observer.disconnect()
+      window.removeEventListener('scroll', handleScroll, { capture: true })
       if (removeScrollListener) removeScrollListener()
     }
   }, [scrollbar])
@@ -126,28 +136,6 @@ function TrendingSpotlight({ items = [], isLoading = false, onCardClick }) {
 
     return () => clearInterval(timer)
   }, [isPlaying, isHovered, isInView, totalItems, handleNext, currentIndex])
-
-  // Auto-scroll to spotlight area upon movie/show change (skip initial mount)
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false
-      return
-    }
-
-    if (!sectionRef.current) return
-
-    if (scrollbar && typeof scrollbar.scrollIntoView === 'function') {
-      scrollbar.scrollIntoView(sectionRef.current, {
-        offsetTop: 12,
-        onlyScrollIfNeeded: false,
-      })
-    } else if (typeof sectionRef.current.scrollIntoView === 'function') {
-      sectionRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
-    }
-  }, [currentIndex, scrollbar])
 
   // Scroll active thumbnail smoothly into view inside horizontal rail
   useEffect(() => {
