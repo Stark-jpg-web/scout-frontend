@@ -27,3 +27,6 @@ dist-ssr
 .env
 .env.*
 !.env.example
+
+# Private documentation & roadmaps
+FRAMEFINDER_AI_ROADMAP_AND_DEV_GUIDE.md
